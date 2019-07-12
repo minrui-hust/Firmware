@@ -99,11 +99,20 @@ MulticopterAttitudeControl::parameters_updated()
 	// Store some of the parameters in a more convenient way & precompute often-used values
 	_attitude_control.setProportionalGain(Vector3f(_param_mc_roll_p.get(), _param_mc_pitch_p.get(), _param_mc_yaw_p.get()));
 
-	// rate gains
-	_rate_p = Vector3f(_param_mc_rollrate_p.get(), _param_mc_pitchrate_p.get(), _param_mc_yawrate_p.get());
-	_rate_i = Vector3f(_param_mc_rollrate_i.get(), _param_mc_pitchrate_i.get(), _param_mc_yawrate_i.get());
+	// Rate gains
+	// The controller gain K is used to convert the parallel (P + I/s + sD) form
+	// to the ideal (K * [1 + 1/sTi + sTd]) form
+	const float p_k = _param_mc_rollrate_k.get();
+	const float q_k = _param_mc_pitchrate_k.get();
+	const float r_k = _param_mc_yawrate_k.get();
+
+	_rate_p = Vector3f(_param_mc_rollrate_p.get() * p_k, _param_mc_pitchrate_p.get() * q_k,
+			   _param_mc_yawrate_p.get() * r_k);
+	_rate_i = Vector3f(_param_mc_rollrate_i.get() * p_k, _param_mc_pitchrate_i.get() * q_k,
+			   _param_mc_yawrate_i.get() * r_k);
 	_rate_int_lim = Vector3f(_param_mc_rr_int_lim.get(), _param_mc_pr_int_lim.get(), _param_mc_yr_int_lim.get());
-	_rate_d = Vector3f(_param_mc_rollrate_d.get(), _param_mc_pitchrate_d.get(), _param_mc_yawrate_d.get());
+	_rate_d = Vector3f(_param_mc_rollrate_d.get() * p_k, _param_mc_pitchrate_d.get() * q_k,
+			   _param_mc_yawrate_d.get() * r_k);
 	_rate_ff = Vector3f(_param_mc_rollrate_ff.get(), _param_mc_pitchrate_ff.get(), _param_mc_yawrate_ff.get());
 
 	if (fabsf(_lp_filters_d.get_cutoff_freq() - _param_mc_dterm_cutoff.get()) > 0.01f) {

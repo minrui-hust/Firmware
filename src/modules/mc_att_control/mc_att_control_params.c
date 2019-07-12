@@ -115,6 +115,20 @@ PARAM_DEFINE_FLOAT(MC_ROLLRATE_D, 0.003f);
 PARAM_DEFINE_FLOAT(MC_ROLLRATE_FF, 0.0f);
 
 /**
+ * Roll rate controller gain
+ *
+ * Global gain of the controller. Increase if the response is sluggish, decrease if
+ * it is overshoothing.
+ *
+ * @min 0.0
+ * @max 5.0
+ * @decimal 4
+ * @increment 0.0005
+ * @group Multicopter Attitude Control
+ */
+PARAM_DEFINE_FLOAT(MC_ROLLRATE_K, 1.0f);
+
+/**
  * Pitch P gain
  *
  * Pitch proportional gain, i.e. desired angular speed in rad/s for error 1 rad.
@@ -187,6 +201,20 @@ PARAM_DEFINE_FLOAT(MC_PITCHRATE_D, 0.003f);
  * @group Multicopter Attitude Control
  */
 PARAM_DEFINE_FLOAT(MC_PITCHRATE_FF, 0.0f);
+
+/**
+ * Pitch rate controller gain
+ *
+ * Global gain of the controller. Increase if the response is sluggish, decrease if
+ * it is overshoothing.
+ *
+ * @min 0.0
+ * @max 5.0
+ * @decimal 4
+ * @increment 0.0005
+ * @group Multicopter Attitude Control
+ */
+PARAM_DEFINE_FLOAT(MC_PITCHRATE_K, 1.0f);
 
 /**
  * Yaw P gain
@@ -262,6 +290,20 @@ PARAM_DEFINE_FLOAT(MC_YAWRATE_D, 0.0f);
  * @group Multicopter Attitude Control
  */
 PARAM_DEFINE_FLOAT(MC_YAWRATE_FF, 0.0f);
+
+/**
+ * Yaw rate controller gain
+ *
+ * Global gain of the controller. Increase if the response is sluggish, decrease if
+ * it is overshoothing.
+ *
+ * @min 0.0
+ * @max 5.0
+ * @decimal 4
+ * @increment 0.0005
+ * @group Multicopter Attitude Control
+ */
+PARAM_DEFINE_FLOAT(MC_YAWRATE_K, 1.0f);
 
 /**
  * Max roll rate
